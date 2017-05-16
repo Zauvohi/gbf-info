@@ -5,39 +5,140 @@
     <title>GBF GW Info</title>
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   </head>
   <body>
-    <nav class="nav-extended">
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $('#day_select').material_select();
+        $('#search_type').material_select();
+        $('#edition').material_select();
+
+        $('#search_type').on('change', function(e) {
+          console.log(e.target.value);
+        });
+      });
+    </script>
+    <nav class="nav-extended light-blue lighten-2">
       <div class="nav-wrapper">
         <a href="#" class="brand-logo">Logo</a>
-        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><a href="sass.html">Sass</a></li>
-          <li><a href="badges.html">Components</a></li>
-          <li><a href="collapsible.html">JavaScript</a></li>
-        </ul>
-        <ul class="side-nav" id="mobile-demo">
-          <li><a href="sass.html">Sass</a></li>
-          <li><a href="badges.html">Components</a></li>
-          <li><a href="collapsible.html">JavaScript</a></li>
-        </ul>
       </div>
       <div class="nav-content">
         <ul class="tabs tabs-transparent">
-          <li class="tab"><a href="#test1">Test 1</a></li>
-          <li class="tab"><a class="active" href="#test2">Test 2</a></li>
-          <li class="tab disabled"><a href="#test3">Disabled Tab</a></li>
-          <li class="tab"><a href="#test4">Test 4</a></li>
+          <li class="tab"><a href="#cutoffs">Cutoffs</a></li>
+          <li class="tab"><a class="active" href="#rankings">Individual Rankings</a></li>
+          <li class="tab disabled"><a href="#bets">Bets Rigging</a></li>
+          <li class="tab"><a href="#ad">Free crystals</a></li>
         </ul>
       </div>
     </nav>
-    <div id="test1" class="col s12">Test 1</div>
-    <div id="test2" class="col s12">Test 2</div>
-    <div id="test3" class="col s12">Test 3</div>
-    <div id="test4" class="col s12">Test 4</div>
-    <!--Import jQuery before materialize.js-->
-     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-     <script type="text/javascript" src="js/materialize.min.js"></script>
+    <div id="cutoffs" class="col s12">
+      <div class="container">
+        <div class="row">
+          <div class="col s12">
+            <table class="stripped" id="cutoff-table">
+              <thead>
+                <th>Position</th>
+                <th>Player ID</th>
+                <th>Player Name</th>
+                <th>Player Rank</th>
+                <th>Points</th>
+                <th>Total Battles</th>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        </div>
+    </div>
+    <div id="rankings" class="col s12">
+      <div class="container">
+        <div class="row">
+          <p>
+            You can look up by ID or player name and pick a day ("Global" being the results for the whole event).
+          </p>
+          <p>
+            Only searches by ID can pick a day in specific, and you can input multiple IDs if you separate them with a comma.
+          </p>
+        </div>
+        <div class="row">
+          <form class="col s12">
+            <div class="row">
+              <div class="input-field col s5">
+                <input type="text" name="search_terms" id="search_terms" class="materialize-textarea" placeholder="Search value(s) go here!">
+              </div>
+              <div class="input-field col s1">
+                <select id="day_select">
+                  <option value="prelims">Prelims</option>
+                  <option value="interlude">Interlude</option>
+                  <option value="1">Day 1</option>
+                  <option value="2">Day 2</option>
+                  <option value="3">Day 3</option>
+                  <option value="4">Day 4</option>
+                  <option value="5">Day 5</option>
+                  <option value="global">Global</option>
+                </select>
+              </div>
+              <div class="input-field col s1">
+                <select id="search_type">
+                  <option value="id">ID</option>
+                  <option value="name">Name</option>
+                </select>
+              </div>
+              <div class="input-field col s1">
+                <select id="edition">
+                   <option value="" disabled selected>GW Edition</option>
+                   <option value="29">29</option>
+                </select>
+              </div>
+            </div>
+            <button class="btn light-blue lighten-2" type="submit" name="action">Submit
+              <i class="material-icons right">send</i>
+            </button>
+          </form>
+        </div>
+        <div class="row">
+          <div class="col s12">
+            <table class="stripped" id="individual_day_table">
+              <thead>
+                <th>Position</th>
+                <th>Player ID</th>
+                <th>Player Name</th>
+                <th>Player Rank</th>
+                <th>Points</th>
+                <th>Total Battles</th>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+            <table class="stripped hide" id="global_table">
+              <thead>
+                <th>Position</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Rank</th>
+                <th>Points</th>
+                <th>Battles</th>
+                <th>Prelims</th>
+                <th>Interlude</th>
+                <th>Day 1</th>
+                <th>Day 2</th>
+                <th>Day 3</th>
+                <th>Day 4</th>
+                <th>Day 5</th>
+                <th>Total</th>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="bets" class="col s12">Test 3</div>
+    <div id="ad" class="col s12">JOIN IDOLGUILD</div>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
   </body>
 </html>
