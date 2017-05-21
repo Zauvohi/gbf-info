@@ -41,10 +41,6 @@
           $('#group_title').text(e.target.value);
         });
 
-        function addToTable(player) {
-          console.log(player);
-        }
-
         $('#search_players').on('click', function(e) {
           e.preventDefault();
           var search_terms = $('#search_terms').val().split(',');
@@ -65,7 +61,7 @@
               dataType: 'json',
               processData: false,
             }).done(function(response) {
-              addToTable(response);
+              addToTable(response, day);
             });
           });
         });

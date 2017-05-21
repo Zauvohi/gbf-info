@@ -37,13 +37,40 @@ function fillCutOffs() {
 }
 
 function addToIndividualTable(data) {
+  var tr = document.createElement('tr');
+  var tds = [];
+  var attributes = ['position, id, name, rank, ranking_points, total_battles'];
 
+
+  for (i = 0; i < 6; i++) {
+    tds.push(document.createElement('td'));
+  }
+
+  tds[0].innerHTML = data.position;
+  tds[1].innerHTML = data.id;
+  tds[2].innerHTML = data.name;
+  tds[3].innerHTML = data.rank;
+  tds[4].innerHTML = data.ranking_points[0];
+  tds[5].innerHTML = data.total_battles;
+
+  for (i = 0; i < tds.length; i++) {
+    tr.appendChild(tds[i]);
+  }
+
+  document.querySelector('#individual_day_table tbody').appendChild(tr);
+}
+
+function addToGlobalTable(data) {
+  var tr = document.createElement('tr');
+  var tds = [];
 }
 
 
 function addToTable(data, type) {
+  console.log(data);
   if (type == "global") {
-    addToGlobalTable(data);
+    //addToGlobalTable(data);
+    console.log(data);
   } else {
     addToIndividualTable(data);
   }
