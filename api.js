@@ -63,14 +63,45 @@ function addToIndividualTable(data) {
 function addToGlobalTable(data) {
   var tr = document.createElement('tr');
   var tds = [];
+  var info_attributes = ['position', 'id', 'name', 'rank', 'total_battles'];
+  var ranking_points = data.ranking_points;
+
+  for (i = 0; i < 13; i++) {
+    tds.push(document.createElement('td'));
+  }
+
+  for (i = 0; i < info_attributes.length; i++) {
+    tds[i].innerHTML = data[info_attributes[i]];
+  }
+
+  var previous_total = 0;
+
+  for (i = 0; i < ranking_points.length; i++) {
+     if (i == 2) {
+       tds[6].innerHTML = ranking_points[2] - ranking_points[0];
+     } else if (i > 2){
+       tds[i + 4].innerHTML = ranking_points[i] - previous_total;
+     } else {
+       tds[i + 5].innerHTML = ranking_points[i] - previous_total;
+     }
+
+     previous_total = ranking_points[i];
+  }
+
+  tds[11].innerHTML = ranking_points[6];
+
+  for (i = 0; i < tds.length; i++) {
+    tr.appendChild(tds[i]);
+  }
+
+  document.querySelector('#global_table').appendChild(tr);
 }
 
 
 function addToTable(data, type) {
   console.log(data);
   if (type == "global") {
-    //addToGlobalTable(data);
-    console.log(data);
+    addToGlobalTable(data);
   } else {
     addToIndividualTable(data);
   }
