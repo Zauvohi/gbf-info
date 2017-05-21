@@ -98,11 +98,30 @@ function addToGlobalTable(data) {
 }
 
 
-function addToTable(data, type) {
-  console.log(data);
-  if (type == "global") {
+function addToTable(data, day) {
+  if (day == "global") {
     addToGlobalTable(data);
   } else {
     addToIndividualTable(data);
   }
+}
+
+function searchPlayers(search_terms, edition, day, search_type) {
+  var url = "https://serene-spire-95459.herokuapp.com//rankings/" + edition + "/" + day + "/";
+
+  if (search_type == "name") {
+    url += "names/";
+  }
+
+  search_terms.forEach(function(term) {
+    $.ajax({
+      method: 'GET',
+      url: url + term,
+      crossDomain: true,
+      dataType: 'json',
+      processData: false,
+    }).done(function(response) {
+      addToTable(response, day);
+    });
+  });
 }

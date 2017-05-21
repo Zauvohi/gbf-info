@@ -26,9 +26,11 @@
 
           if (day == 'global') {
             $('#individual_day_table').addClass('hide');
+            $('#individual_day_table > tr').remove();
             $('#global_table').removeClass('hide');
           } else {
             $('#global_table').addClass('hide');
+            $('#global_table > tr').remove();
             $('#individual_day_table').removeClass('hide');
           }
         });
@@ -47,25 +49,13 @@
           var search_type = $('#search_type').val();
           var gw_edition = $('#edition').val();
           var day = $('#day_select').val();
-          var url = "https://serene-spire-95459.herokuapp.com//rankings/" + gw_edition + "/" + day + "/";
 
-          if (search_type == "name") {
-            url += "names/"
+          if (search_terms.length > 30) {
+            Materialize.toast('You can only search 30 items at a time!', 4000)
+          } else {
+            searchPlayers(search_terms, gw_edition, day, search_type);
           }
-
-          search_terms.forEach(function(term) {
-            $.ajax({
-              method: 'GET',
-              url: url + term,
-              crossDomain: true,
-              dataType: 'json',
-              processData: false,
-            }).done(function(response) {
-              addToTable(response, day);
-            });
-          });
         });
-
       });
     </script>
     <nav class="nav-extended light-blue lighten-2">
