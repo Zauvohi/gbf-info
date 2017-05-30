@@ -107,7 +107,7 @@ function addToTable(data, day) {
 }
 
 function searchPlayers(search_terms, edition, day, search_type) {
-  var url = "https://serene-spire-95459.herokuapp.com//rankings/" + edition + "/" + day + "/";
+  var url = "https://serene-spire-95459.herokuapp.com/rankings/" + edition + "/" + day + "/";
 
   if (search_type == "name") {
     url += "names/";

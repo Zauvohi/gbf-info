@@ -38,6 +38,14 @@
 
         $('#edition').on('change', function(e) {
           document.querySelector('#search_players').disabled = false;
+          if (e.target.value == "30") {
+            $("#day_select").val("5");
+            $("#day_select").prop("disabled", true);
+            $("#day_select").material_select();
+          } else {
+            $("#day_select").prop("disabled", false);
+            $("#day_select").material_select();
+          }
         });
 
         $('#group_name_value').on('keyup', function(e) {
@@ -130,6 +138,7 @@
                 <select id="edition">
                    <option value="" disabled selected>GW Edition</option>
                    <option value="29">29</option>
+                   <option value="30">30</option>
                 </select>
               </div>
             </div>
