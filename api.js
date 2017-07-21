@@ -44,7 +44,7 @@ function addToIndividualTable(data) {
   var tr = document.createElement('tr');
   var attributes = ['position', 'id', 'name', 'rank', 'points', 'total_battles'];
 
-  for (i = 0; i < 6; i++) {
+  for (i = 0; i < attributes.length; i++) {
     td = document.createElement('td');
     td.innerHTML = data[attributes[i]];
     tr.appendChild(td);
