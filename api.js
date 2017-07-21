@@ -90,7 +90,6 @@ function addToGlobalTable(data) {
   document.querySelector('#global_table').appendChild(tr);
 }
 
-
 function addToTable(data, day) {
   if (day == "global") {
     addToGlobalTable(data);
@@ -139,4 +138,21 @@ function searchPlayers(player_id, edition_id, day) {
   }).done(function(response) {
     addToTable(response, day);
   });
+}
+
+function editionInfo() {
+  var opt = $('#edition option:selected');
+  var number = opt.data('number');
+  var element = opt.data('element');
+  var day = $('#day_select option:selected').val();
+  var msg = 'Displaying rankings for GW #' + number + '(' + element + ').';
+
+  if ($.isNumeric(day)) {
+    day = day == '0' ? 'prelims' : day;
+    msg += ' Day: ' + day + '.';
+  } else if (day == 'global') {
+    msg = 'Displaying global data.';
+  }
+
+  $('#ranking_info').text(msg);
 }
