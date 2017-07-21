@@ -38,23 +38,12 @@ function fillCutOffs() {
 
 function addToIndividualTable(data) {
   var tr = document.createElement('tr');
-  var tds = [];
-  var attributes = ['position, id, name, rank, ranking_points, total_battles'];
-
+  var attributes = ['position, id, name, rank, points, total_battles'];
 
   for (i = 0; i < 6; i++) {
-    tds.push(document.createElement('td'));
-  }
-
-  tds[0].innerHTML = data.position;
-  tds[1].innerHTML = data.id;
-  tds[2].innerHTML = data.name;
-  tds[3].innerHTML = data.rank;
-  tds[4].innerHTML = data.ranking_points[0];
-  tds[5].innerHTML = data.total_battles;
-
-  for (i = 0; i < tds.length; i++) {
-    tr.appendChild(tds[i]);
+    td = document.createElement('td');
+    td.innerHTML = data[attributes[i]];
+    tr.appendChild(td);
   }
 
   document.querySelector('#individual_day_table tbody').appendChild(tr);
