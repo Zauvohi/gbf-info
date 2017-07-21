@@ -1,3 +1,7 @@
+function getBaseUrl() {
+  return "https://serene-spire-95459.herokuapp.com";
+}
+
 function addToCutoffsTable(data) {
   //parsed_data = JSON.parse(data);
   time = new Date(data.created_at);
@@ -93,6 +97,34 @@ function addToTable(data, day) {
   } else {
     addToIndividualTable(data);
   }
+}
+
+function getEditions() {
+  var url = getBaseUrl();
+  url += '/editions';
+
+  $.ajax({
+    method: 'GET',
+    url: url,
+    crossDomain: true,
+    dataType: 'json',
+    processData: false,
+  }).done(function(response) {
+    fillEditions(response);
+  });
+}
+
+function fillEditions(data) {
+  data.forEach(function(edition) {
+    var opt = document.createElement('option');
+    opt.value = edition.id;
+    opt.text = edition.number + ' (' + edition.element + ')';
+    opt.dataset.element = edition.element;
+    opt.dataset.number = edition.number;
+    document.querySelector('#edition').appendChild(opt);
+  });
+
+  $('#edition').material_select();
 }
 
 function searchPlayers(search_terms, edition, day, search_type) {

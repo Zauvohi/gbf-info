@@ -16,9 +16,9 @@
       $(document).ready(function() {
         $('#day_select').material_select();
         $('#search_type').material_select();
-        $('#edition').material_select();
+        getEditions();
 
-        fillCutOffs();
+        //fillCutOffs();
 
         $('#day_select').on('change', function(e) {
           console.log(e.target.value);
@@ -137,8 +137,6 @@
               <div class="input-field col s2 m2 l1">
                 <select id="edition">
                    <option value="" disabled selected>GW Edition</option>
-                   <option value="29">29</option>
-                   <option value="30">30</option>
                 </select>
               </div>
             </div>
