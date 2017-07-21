@@ -42,7 +42,7 @@ function fillCutOffs() {
 
 function addToIndividualTable(data) {
   var tr = document.createElement('tr');
-  var attributes = ['position, id, name, rank, points, total_battles'];
+  var attributes = ['position', 'id', 'name', 'rank', 'points', 'total_battles'];
 
   for (i = 0; i < 6; i++) {
     td = document.createElement('td');
@@ -127,22 +127,16 @@ function fillEditions(data) {
   $('#edition').material_select();
 }
 
-function searchPlayers(search_terms, edition, day, search_type) {
-  var url = "https://serene-spire-95459.herokuapp.com/rankings/" + edition + "/" + day + "/";
-
-  if (search_type == "name") {
-    url += "names/";
-  }
-
-  search_terms.forEach(function(term) {
-    $.ajax({
-      method: 'GET',
-      url: url + term,
-      crossDomain: true,
-      dataType: 'json',
-      processData: false,
-    }).done(function(response) {
-      addToTable(response, day);
-    });
+function searchPlayers(player_id, edition_id, day) {
+  var url = getBaseUrl() + "/rankings/" + edition_id + "/" + player_id;
+  $.ajax({
+    method: 'GET',
+    url: url,
+    crossDomain: true,
+    dataType: 'json',
+    data: { 'day': day },
+    processData: false,
+  }).done(function(response) {
+    addToTable(response, day);
   });
 }
