@@ -21,31 +21,22 @@
         //fillCutOffs();
 
         $('#day_select').on('change', function(e) {
-          console.log(e.target.value);
           day = e.target.value;
 
           if (day == 'global') {
             $('#individual_day_table').addClass('hide');
             $('#global_table').removeClass('hide');
-            $('#individual_day_table > tr').remove();
+            $('#individual_day_table > tbody').empty();
           } else {
             $('#global_table').addClass('hide');
             $('#individual_day_table').removeClass('hide');
-            $('#global_table > tr').remove();
-            $('#individual_day_table > tr').remove();
+            $('#global_table > tbody').empty();
+            $('#individual_day_table > tbody').empty();
           }
         });
 
         $('#edition').on('change', function(e) {
           document.querySelector('#search_players').disabled = false;
-          if (e.target.value == "30") {
-            $("#day_select").val("5");
-            $("#day_select").prop("disabled", true);
-            $("#day_select").material_select();
-          } else {
-            $("#day_select").prop("disabled", false);
-            $("#day_select").material_select();
-          }
         });
 
         $('#group_name_value').on('keyup', function(e) {
@@ -54,15 +45,17 @@
 
         $('#search_players').on('click', function(e) {
           e.preventDefault();
-          var search_terms = $('#search_terms').val().split(',');
+          var player_ids = $('#player_ids').val().split(',');
           var search_type = $('#search_type').val();
           var gw_edition = $('#edition').val();
           var day = $('#day_select').val();
 
-          if (search_terms.length > 30) {
+          if (player_ids.length > 30) {
             Materialize.toast('You can only search 30 items at a time!', 4000)
           } else {
-            searchPlayers(search_terms, gw_edition, day, search_type);
+            player_ids.forEach(function(id) {
+              searchPlayers(id, gw_edition, day, search_type);
+            });
           }
         });
       });
@@ -114,7 +107,7 @@
           <form class="col s12">
             <div class="row">
               <div class="input-field col s5">
-                <input type="text" name="search_terms" id="search_terms" class="materialize-textarea" placeholder="Search value(s) go here!">
+                <input type="text" name="player_ids" id="player_ids" class="materialize-textarea" placeholder="Search value(s) go here!">
               </div>
               <div class="input-field col s2 m2 l2">
                 <select id="day_select">
