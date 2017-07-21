@@ -1,3 +1,7 @@
+function getBaseUrl() {
+  return "https://serene-spire-95459.herokuapp.com";
+}
+
 function addToCutoffsTable(data) {
   //parsed_data = JSON.parse(data);
   time = new Date(data.created_at);
@@ -38,23 +42,12 @@ function fillCutOffs() {
 
 function addToIndividualTable(data) {
   var tr = document.createElement('tr');
-  var tds = [];
-  var attributes = ['position, id, name, rank, ranking_points, total_battles'];
-
+  var attributes = ['position', 'id', 'name', 'rank', 'points', 'total_battles'];
 
   for (i = 0; i < 6; i++) {
-    tds.push(document.createElement('td'));
-  }
-
-  tds[0].innerHTML = data.position;
-  tds[1].innerHTML = data.id;
-  tds[2].innerHTML = data.name;
-  tds[3].innerHTML = data.rank;
-  tds[4].innerHTML = data.ranking_points[0];
-  tds[5].innerHTML = data.total_battles;
-
-  for (i = 0; i < tds.length; i++) {
-    tr.appendChild(tds[i]);
+    td = document.createElement('td');
+    td.innerHTML = data[attributes[i]];
+    tr.appendChild(td);
   }
 
   document.querySelector('#individual_day_table tbody').appendChild(tr);
@@ -106,22 +99,44 @@ function addToTable(data, day) {
   }
 }
 
-function searchPlayers(search_terms, edition, day, search_type) {
-  var url = "https://serene-spire-95459.herokuapp.com//rankings/" + edition + "/" + day + "/";
+function getEditions() {
+  var url = getBaseUrl();
+  url += '/editions';
 
-  if (search_type == "name") {
-    url += "names/";
-  }
+  $.ajax({
+    method: 'GET',
+    url: url,
+    crossDomain: true,
+    dataType: 'json',
+    processData: false,
+  }).done(function(response) {
+    fillEditions(response);
+  });
+}
 
-  search_terms.forEach(function(term) {
-    $.ajax({
-      method: 'GET',
-      url: url + term,
-      crossDomain: true,
-      dataType: 'json',
-      processData: false,
-    }).done(function(response) {
-      addToTable(response, day);
-    });
+function fillEditions(data) {
+  data.forEach(function(edition) {
+    var opt = document.createElement('option');
+    opt.value = edition.id;
+    opt.text = edition.number + ' (' + edition.element + ')';
+    opt.dataset.element = edition.element;
+    opt.dataset.number = edition.number;
+    document.querySelector('#edition').appendChild(opt);
+  });
+
+  $('#edition').material_select();
+}
+
+function searchPlayers(player_id, edition_id, day) {
+  var url = getBaseUrl() + "/rankings/" + edition_id + "/" + player_id;
+  $.ajax({
+    method: 'GET',
+    url: url,
+    crossDomain: true,
+    dataType: 'json',
+    data: 'day=' + day,
+    processData: false,
+  }).done(function(response) {
+    addToTable(response, day);
   });
 }

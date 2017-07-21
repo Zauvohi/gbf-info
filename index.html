@@ -16,23 +16,22 @@
       $(document).ready(function() {
         $('#day_select').material_select();
         $('#search_type').material_select();
-        $('#edition').material_select();
+        getEditions();
 
-        fillCutOffs();
+        //fillCutOffs();
 
         $('#day_select').on('change', function(e) {
-          console.log(e.target.value);
           day = e.target.value;
 
           if (day == 'global') {
             $('#individual_day_table').addClass('hide');
             $('#global_table').removeClass('hide');
-            $('#individual_day_table > tr').remove();
+            $('#individual_day_table > tbody').empty();
           } else {
             $('#global_table').addClass('hide');
             $('#individual_day_table').removeClass('hide');
-            $('#global_table > tr').remove();
-            $('#individual_day_table > tr').remove();
+            $('#global_table > tbody').empty();
+            $('#individual_day_table > tbody').empty();
           }
         });
 
@@ -46,27 +45,29 @@
 
         $('#search_players').on('click', function(e) {
           e.preventDefault();
-          var search_terms = $('#search_terms').val().split(',');
+          var player_ids = $('#player_ids').val().split(',');
           var search_type = $('#search_type').val();
           var gw_edition = $('#edition').val();
           var day = $('#day_select').val();
 
-          if (search_terms.length > 30) {
+          if (player_ids.length > 30) {
             Materialize.toast('You can only search 30 items at a time!', 4000)
           } else {
-            searchPlayers(search_terms, gw_edition, day, search_type);
+            player_ids.forEach(function(id) {
+              searchPlayers(id, gw_edition, day, search_type);
+            });
           }
         });
       });
     </script>
     <nav class="nav-extended light-blue lighten-2">
       <div class="nav-wrapper">
-        <a href="#" class="brand-logo">GBF GW</a>
+        <a href="#" class="brand-logo">GBF GW Individual Rankings Lookup</a>
       </div>
       <div class="nav-content">
         <ul class="tabs tabs-transparent">
-          <li class="tab"><a class="active" href="#cutoffs">Cutoffs</a></li>
-          <li class="tab"><a href="#rankings">Individual Rankings</a></li>
+          <li class="tab"><a href="#cutoffs">Cutoffs</a></li>
+          <li class="tab"><a class="active" href="#rankings">Individual Rankings</a></li>
           <li class="tab disabled"><a href="#bets">Bets Rigging</a></li>
           <li class="tab"><a href="#ad">Free crystals</a></li>
         </ul>
@@ -96,40 +97,39 @@
       <div class="container">
         <div class="row">
           <p>
-            You can look up by ID or player name and pick a day ("Global" being the results for the whole event).
+            You can look up by player ID and pick a day. Currently you can only look one player at the time but if you lookup another ID it'll be added at the bottom of the table.
           </p>
           <p>
-            Only searches by ID can pick a day in specific, and you can input multiple IDs if you separate them with a comma.
+            More features will be added Soon™.
           </p>
         </div>
         <div class="row">
           <form class="col s12">
             <div class="row">
               <div class="input-field col s5">
-                <input type="text" name="search_terms" id="search_terms" class="materialize-textarea" placeholder="Search value(s) go here!">
+                <input type="text" name="player_ids" id="player_ids" class="materialize-textarea" placeholder="Search value(s) go here!">
               </div>
-              <div class="input-field col s2 m2 l1">
+              <div class="input-field col s2 m2 l2">
                 <select id="day_select">
-                  <option value="prelims">Prelims</option>
-                  <option value="interlude">Interlude</option>
+                  <option value="0">Prelims</option>
                   <option value="1">Day 1</option>
                   <option value="2">Day 2</option>
                   <option value="3">Day 3</option>
                   <option value="4">Day 4</option>
                   <option value="5">Day 5</option>
-                  <option value="global">Global</option>
+                  <option disabled value="list">All days</option>
+                  <option disabled value="global">Global</option>
                 </select>
               </div>
-              <div class="input-field col s2 m2 l1">
+              <div class="input-field col s2 m2 l2">
                 <select id="search_type">
                   <option value="id">ID</option>
-                  <option value="name">Name</option>
+                  <option disabled value="name">Name</option>
                 </select>
               </div>
-              <div class="input-field col s2 m2 l1">
+              <div class="input-field col s3 m2 l2">
                 <select id="edition">
                    <option value="" disabled selected>GW Edition</option>
-                   <option value="29">29</option>
                 </select>
               </div>
             </div>
@@ -188,7 +188,7 @@
       <div class="container">
         <div class="col s12">
           <p>
-            JOIN IDOLGUILD
+            <a href="http://game.granbluefantasy.jp/#guild/detail/632242">JOIN IDOLGUILD</a>
           </p>
         </div>
       </div>
