@@ -134,7 +134,7 @@ function searchPlayers(player_id, edition_id, day) {
     url: url,
     crossDomain: true,
     dataType: 'json',
-    data: { 'day': day },
+    data: 'day=' + day,
     processData: false,
   }).done(function(response) {
     addToTable(response, day);
