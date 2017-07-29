@@ -21,18 +21,15 @@
 
         $('#day_select').on('change', function(e) {
           day = e.target.value;
-
-          if (day == 'global') {
-            $('#individual_day_table').addClass('hide');
-            $('#global_table').removeClass('hide');
-            $('#individual_day_table > tbody').empty();
-          } else {
-            $('#global_table').addClass('hide');
-            $('#individual_day_table').removeClass('hide');
-            $('#global_table > tbody').empty();
-            $('#individual_day_table > tbody').empty();
-          }
+          $('#rankings_table > thead').empty();
+          $('#rankings_table > tbody').empty();
           $("#ranking_info").text(editionInfo());
+
+          if ($.isNumeric(day)) {
+            addHeaders('single');
+          } else {
+            addHeaders('multi');
+          }
         });
 
         $('#edition').on('change', function(e) {
@@ -153,32 +150,8 @@
         </div>
         <div class="row">
           <div class="col s12">
-            <table class="stripped" id="individual_day_table">
+            <table class="striped" id="rankings_table">
               <thead>
-                <th>Position</th>
-                <th>Player ID</th>
-                <th>Player Name</th>
-                <th>Player Rank</th>
-                <th>Points</th>
-                <th>Total Battles</th>
-              </thead>
-              <tbody>
-              </tbody>
-            </table>
-            <table class="stripped hide" id="global_table">
-              <thead>
-                <th>Position</th>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Rank</th>
-                <th>Battles</th>
-                <th>Prelims</th>
-                <th>Day 1</th>
-                <th>Day 2</th>
-                <th>Day 3</th>
-                <th>Day 4</th>
-                <th>Day 5</th>
-                <th>Total</th>
               </thead>
               <tbody>
               </tbody>

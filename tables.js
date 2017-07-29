@@ -1,3 +1,42 @@
+function singleDayHeaders() {
+  return ['Position', 'ID', 'Name', 'Rank', 'Points', 'Battles'];
+}
+
+function multiDayHeaders() {
+  return [
+    'Position',
+    'ID',
+    'Name',
+    'Rank',
+    'Battles',
+    'Prelims',
+    'Day 1',
+    'Day 2',
+    'Day 3',
+    'Day 4',
+    'Day 5/Final'
+  ];
+}
+
+function addHeaders(type) {
+  var headers = [];
+  if (type === 'single') {
+    headers = singleDayHeaders();
+  } else {
+    headers = multiDayHeaders();
+  }
+
+  var tr = document.createElement('tr');
+
+  for (var i = 0; i < headers.length; i++) {
+    var th = document.createElement('th');
+    th.innerHTML = headers[i];
+    tr.appendChild(th);
+  }
+
+  document.querySelector('#rankings_table > thead').appendChild(tr);
+}
+
 function addToCutoffsTable(data) {
   //parsed_data = JSON.parse(data);
   time = new Date(data.created_at);
