@@ -73,7 +73,7 @@ function addToIndividualTable(data) {
     tr.appendChild(td);
   }
 
-  document.querySelector('#individual_day_table tbody').appendChild(tr);
+  document.querySelector('#rankings_table tbody').appendChild(tr);
 }
 
 function addToGlobalTable(data) {
