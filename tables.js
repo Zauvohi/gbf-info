@@ -8,13 +8,13 @@ function multiDayHeaders() {
     'ID',
     'Name',
     'Rank',
-    'Battles',
     'Prelims',
     'Day 1',
     'Day 2',
     'Day 3',
     'Day 4',
-    'Day 5/Final'
+    'Day 5',
+    'Battles'
   ];
 }
 
@@ -76,6 +76,37 @@ function addToIndividualTable(data) {
   document.querySelector('#rankings_table tbody').appendChild(tr);
 }
 
+function addToMultiDayTable(data) {
+  var tr = document.createElement('tr');
+  var player_attrs = ['id', 'name', 'rank'];
+  var days = 6; // prelims and from day 1 to day 5
+  var position;
+  var battles = 0;
+
+  for (var i = 0; i < player_attrs.length + days; i++) {
+    var td = document.createElement('td');
+    if (i < player_attrs.length) {
+      td.innerHTML = data[player_attrs[i]];
+    } else {
+      var day = i - player_attrs.length;
+      var position_b;
+      td.innerHTML = data.list[day].points;
+      position_b = data.list[day].position;
+      battles_b = data.list[day].total_battles;
+      position = position_b !== undefined ? position_b : 'DNQ';
+      battles = battles_b !== undefined ? battles_b : battles;
+    }
+    tr.appendChild(td);
+  }
+  var pos_td = document.createElement('td');
+  var battle_td = document.createElement('td');
+  pos_td.innerHTML = position;
+  battle_td.innerHTML = battles;
+  tr.insertBefore(pos_td, tr.firstChild);
+  tr.appendChild(battle_td);
+  document.querySelector('#rankings_table > tbody').appendChild(tr);
+}
+
 function addToGlobalTable(data) {
   var tr = document.createElement('tr');
   var tds = [];
@@ -114,7 +145,9 @@ function addToGlobalTable(data) {
 }
 
 function addToTable(data, day) {
-  if (day == "global") {
+  if (day === "list") {
+    addToMultiDayTable(data);
+  } else if (day === "global") {
     addToGlobalTable(data);
   } else {
     addToIndividualTable(data);

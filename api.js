@@ -1,3 +1,5 @@
+// Documentation https://github.com/Zauvohi/gbf-gw_api/blob/developer/README.md
+
 function getBaseUrl() {
   return "https://serene-spire-95459.herokuapp.com";
 }
@@ -42,8 +44,7 @@ function fillEditions(data) {
   $('#edition').material_select();
 }
 
-function searchPlayers(player_id, edition_id, day) {
-  var url = getBaseUrl() + "/rankings/" + edition_id + "/" + player_id;
+function getSingleDay(url) {
   $.ajax({
     method: 'GET',
     url: url,
@@ -54,6 +55,31 @@ function searchPlayers(player_id, edition_id, day) {
   }).done(function(response) {
     addToTable(response, day);
   });
+}
+
+function getMultiDay(url) {
+  $.ajax({
+    method: 'GET',
+    url: url,
+    crossDomain: true,
+    dataType: 'json',
+    processData: false,
+  }).done(function(response) {
+    addToTable(response, day);
+  });
+}
+
+function searchPlayers(player_id, edition_id, day) {
+  var url = getBaseUrl() + '/rankings/';
+  var s_url = edition_id + "/" + player_id;
+
+  if (day === 'list' || day === 'global') {
+    url += day + '/' + s_url;
+    getMultiDay(url);
+  } else {
+    url += s_url;
+    getSingleDay(url);
+  }
 }
 
 function editionInfo() {

@@ -44,7 +44,7 @@
         $('#search_players').on('click', function(e) {
           e.preventDefault();
           var player_ids = $('#player_ids').val().split(',');
-          var search_type = $('#search_type').val();
+          //var search_type = $('#search_type').val();
           var gw_edition = $('#edition').val();
           var day = $('#day_select').val();
 
@@ -52,7 +52,7 @@
             Materialize.toast('You can only search 30 items at a time!', 4000)
           } else {
             player_ids.forEach(function(id) {
-              searchPlayers(id, gw_edition, day, search_type);
+              searchPlayers(id, gw_edition, day);
             });
           }
         });
@@ -115,7 +115,7 @@
                   <option value="3">Day 3</option>
                   <option value="4">Day 4</option>
                   <option value="5">Day 5</option>
-                  <option disabled value="list">All days</option>
+                  <option value="list">All days</option>
                   <option disabled value="global">Global</option>
                 </select>
               </div>
