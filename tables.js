@@ -103,7 +103,6 @@ function addToMultiDayTable(data) {
   var player_attrs = ['id', 'name', 'rank'];
   var days = 6; // prelims and from day 1 to day 5
   var scores = calculateScores(data.list, days);
-  var position;
   var battles = 0;
 
   for (var i = 0; i < player_attrs.length + days; i++) {
@@ -114,15 +113,15 @@ function addToMultiDayTable(data) {
       var day = i - player_attrs.length;
       var position_b;
       td.innerHTML = scores[1][day];
-      position_b = data.list[day].position;
       battles_b = data.list[day].total_battles;
-      position = isNaN(position_b) ? 'DNQ' : position_b;
       battles = isNaN(battles_b) ? battles : battles_b;
     }
     tr.appendChild(td);
   }
   var pos_td = document.createElement('td');
   var battle_td = document.createElement('td');
+  var pos_b = data.list[5].position; // last standing in the rankings
+  var position = isNaN(pos_b) ? 'DNQ' : pos_b;
   pos_td.innerHTML = position;
   battle_td.innerHTML = battles;
   tr.insertBefore(pos_td, tr.firstChild);
