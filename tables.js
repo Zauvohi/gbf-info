@@ -80,7 +80,6 @@ function calculateScores(list, days) {
   var previous_total = 0;
   var day_scores = [];
   var total_scores = [];
-  var scores = [];
 
   for (i = 0; i < days; i++) {
     var score = isNaN(list[i].points) ? 0 : list[i].points;
@@ -96,9 +95,7 @@ function calculateScores(list, days) {
     }
     previous_total = score > 0 ? score : previous_total;
   }
-  scores.push(day_scores);
-  scores.push(total_scores);
-  return scores;
+  return [day_scores, total_scores];
 }
 
 function addToMultiDayTable(data) {
