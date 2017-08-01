@@ -6,59 +6,12 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="api.js">
-
-    </script>
+    <script type="text/javascript" src="tables.js"></script>
+    <script type="text/javascript" src="api.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   </head>
   <body>
-    <script type="text/javascript">
-      $(document).ready(function() {
-        $('#day_select').material_select();
-        $('#search_type').material_select();
-        getEditions();
-
-        //fillCutOffs();
-
-        $('#day_select').on('change', function(e) {
-          day = e.target.value;
-
-          if (day == 'global') {
-            $('#individual_day_table').addClass('hide');
-            $('#global_table').removeClass('hide');
-            $('#individual_day_table > tbody').empty();
-          } else {
-            $('#global_table').addClass('hide');
-            $('#individual_day_table').removeClass('hide');
-            $('#global_table > tbody').empty();
-            $('#individual_day_table > tbody').empty();
-          }
-        });
-
-        $('#edition').on('change', function(e) {
-          document.querySelector('#search_players').disabled = false;
-        });
-
-        $('#group_name_value').on('keyup', function(e) {
-          $('#group_title').text(e.target.value);
-        });
-
-        $('#search_players').on('click', function(e) {
-          e.preventDefault();
-          var player_ids = $('#player_ids').val().split(',');
-          var search_type = $('#search_type').val();
-          var gw_edition = $('#edition').val();
-          var day = $('#day_select').val();
-
-          if (player_ids.length > 30) {
-            Materialize.toast('You can only search 30 items at a time!', 4000)
-          } else {
-            player_ids.forEach(function(id) {
-              searchPlayers(id, gw_edition, day, search_type);
-            });
-          }
-        });
-      });
+    <script type="text/javascript" src="page.js">
     </script>
     <nav class="nav-extended light-blue lighten-2">
       <div class="nav-wrapper">
@@ -111,13 +64,14 @@
               </div>
               <div class="input-field col s2 m2 l2">
                 <select id="day_select">
+                  <option value="" disabled selected>Select a Day</option>
                   <option value="0">Prelims</option>
                   <option value="1">Day 1</option>
                   <option value="2">Day 2</option>
                   <option value="3">Day 3</option>
                   <option value="4">Day 4</option>
                   <option value="5">Day 5</option>
-                  <option disabled value="list">All days</option>
+                  <option value="list">All days</option>
                   <option disabled value="global">Global</option>
                 </select>
               </div>
@@ -147,34 +101,23 @@
         <div class="row group-name">
           <h3 id="group_title"></h3>
         </div>
+        <div class="row group-info">
+          <h6 id="ranking_info"></h6>
+        </div>
+        <div class="row points-options hide">
+          <div class="switch">
+            <label>
+              Total points
+              <input id="points_type" type="checkbox">
+              <span class="lever"></span>
+              Points per day
+            </label>
+          </div>
+        </div>
         <div class="row">
           <div class="col s12">
-            <table class="stripped" id="individual_day_table">
+            <table class="striped" id="rankings_table">
               <thead>
-                <th>Position</th>
-                <th>Player ID</th>
-                <th>Player Name</th>
-                <th>Player Rank</th>
-                <th>Points</th>
-                <th>Total Battles</th>
-              </thead>
-              <tbody>
-              </tbody>
-            </table>
-            <table class="stripped hide" id="global_table">
-              <thead>
-                <th>Position</th>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Rank</th>
-                <th>Battles</th>
-                <th>Prelims</th>
-                <th>Day 1</th>
-                <th>Day 2</th>
-                <th>Day 3</th>
-                <th>Day 4</th>
-                <th>Day 5</th>
-                <th>Total</th>
               </thead>
               <tbody>
               </tbody>
