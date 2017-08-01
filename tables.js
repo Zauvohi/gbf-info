@@ -95,7 +95,7 @@ function calculateScores(list, days) {
     }
     previous_total = score > 0 ? score : previous_total;
   }
-  return [day_scores, total_scores];
+  return [total_scores, day_scores];
 }
 
 function addToMultiDayTable(data) {
@@ -103,16 +103,21 @@ function addToMultiDayTable(data) {
   var player_attrs = ['id', 'name', 'rank'];
   var days = 6; // prelims and from day 1 to day 5
   var scores = calculateScores(data.list, days);
+  var scores_type = $('#points_type').prop('checked') ? 1 : 0;
   var battles = 0;
 
   for (var i = 0; i < player_attrs.length + days; i++) {
     var td = document.createElement('td');
     if (i < player_attrs.length) {
       td.innerHTML = data[player_attrs[i]];
+      td.className = 'player-info ' + 'player-' + player_attrs[i];
     } else {
       var day = i - player_attrs.length;
       var position_b;
-      td.innerHTML = scores[1][day];
+      td.innerHTML = scores[scores_type][day];
+      td.dataset.total_score = scores[0][day];
+      td.dataset.single_score = scores[1][day];
+      td.className = 'player-score ' + 'day-' + day;
       battles_b = data.list[day].total_battles;
       battles = isNaN(battles_b) ? battles : battles_b;
     }
@@ -137,4 +142,15 @@ function addToTable(data, day) {
   } else {
     addToIndividualTable(data);
   }
+}
+
+function swapScores() {
+  var tds = document.querySelectorAll('.player-score');
+  var score_type = $('#points_type').prop('checked') ? 'single' : 'total';
+  score_type += '_score';
+
+  tds.forEach(function(td) {
+    var score = td.dataset[score_type];
+    td.innerHTML = score;
+  });
 }

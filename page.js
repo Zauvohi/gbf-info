@@ -48,4 +48,11 @@ $(document).ready(function() {
       });
     }
   });
+
+  $('#points_type').on('click', function(e) {
+    var total_rows = $('#rankings_table > tbody tr').length;
+    if (total_rows > 0) {
+      swapScores();
+    }
+  });
 });
