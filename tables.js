@@ -76,10 +76,36 @@ function addToIndividualTable(data) {
   document.querySelector('#rankings_table tbody').appendChild(tr);
 }
 
+function calculateScores(list, days) {
+  var previous_total = 0;
+  var day_scores = [];
+  var total_scores = [];
+  var scores = [];
+
+  for (i = 0; i < days; i++) {
+    var score = isNaN(list[i].points) ? 0 : list[i].points;
+
+    if (i === 0) {
+      day_scores.push(score);
+      total_scores.push(score);
+    } else {
+      var individual_score = score === 0 ? 0 : (score - previous_total);
+      var t_score = score === 0 ? 0 : score;
+      day_scores.push(individual_score);
+      total_scores.push(t_score);
+    }
+    previous_total = score > 0 ? score : previous_total;
+  }
+  scores.push(day_scores);
+  scores.push(total_scores);
+  return scores;
+}
+
 function addToMultiDayTable(data) {
   var tr = document.createElement('tr');
   var player_attrs = ['id', 'name', 'rank'];
   var days = 6; // prelims and from day 1 to day 5
+  var scores = calculateScores(data.list, days);
   var position;
   var battles = 0;
 
@@ -90,11 +116,11 @@ function addToMultiDayTable(data) {
     } else {
       var day = i - player_attrs.length;
       var position_b;
-      td.innerHTML = data.list[day].points;
+      td.innerHTML = scores[1][day];
       position_b = data.list[day].position;
       battles_b = data.list[day].total_battles;
-      position = position_b !== undefined ? position_b : 'DNQ';
-      battles = battles_b !== undefined ? battles_b : battles;
+      position = isNaN(position_b) ? 'DNQ' : position_b;
+      battles = isNaN(battles_b) ? battles : battles_b;
     }
     tr.appendChild(td);
   }
