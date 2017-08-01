@@ -16,6 +16,12 @@ $(document).ready(function() {
     } else {
       addHeaders('multi');
     }
+
+    if (day === 'list') {
+      $('.points-options').removeClass('hide');
+    } else {
+      $('.points-options').addClass('hide');
+    }
   });
 
   $('#edition').on('change', function(e) {
