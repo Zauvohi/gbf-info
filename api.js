@@ -38,6 +38,8 @@ function fillEditions(data) {
     opt.text = edition.number + ' (' + edition.element + ')';
     opt.dataset.element = edition.element;
     opt.dataset.number = edition.number;
+    opt.dataset.start_date = edition.start_date;
+    opt.dataset.end_date = edition.end_date;
     document.querySelector('#edition').appendChild(opt);
   });
 
