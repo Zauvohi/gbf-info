@@ -112,7 +112,7 @@ function getCurrentDay() {
   // otherwise it won't work in firefox
   str_end = str_end.replace(/-/g,'/');
   //var start_date = new Date(str_start.replace('+0000', '+0900'));
-  var end_date = new Date();
+  var end_date = new Date(str_end);
   var today = new Date();
   var event_days = 5;
   var current_day = 0;
