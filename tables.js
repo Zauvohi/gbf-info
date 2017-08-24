@@ -107,8 +107,12 @@ function calculateScores(list, days) {
 function getCurrentDay() {
   //var str_start = $('#edition option:selected').data('start_date');
   var str_end = $('#edition option:selected').data('end_date');
+  str_end = str_end.replace('+0000', '+0900');
+  // we have to replace the - with /  so it follows the ECMAScript specification
+  // otherwise it won't work in firefox
+  str_end = str_end.replace(/-/g,'/');
   //var start_date = new Date(str_start.replace('+0000', '+0900'));
-  var end_date = new Date(str_end.replace('+0000', '+0900'));
+  var end_date = new Date();
   var today = new Date();
   var event_days = 5;
   var current_day = 0;
@@ -155,6 +159,7 @@ function addToMultiDayTable(data) {
 
   if (data.list[current_day] === undefined) {
     position = 'DNQ';
+    console.log(current_day);
   } else {
     position = data.list[current_day].position;
     battles = data.list[current_day].total_battles;
