@@ -63,6 +63,35 @@ function addToCutoffsTable(data) {
   $(".cutoffs-updated-at").text(f_time);
 }
 
+function addEmptyRow(day, player_id) {
+  var cols = 0;
+
+  if (day === 'list') {
+    cols = 9
+  } else if (day === 'global') {
+    // stuf for global
+  } else {
+    cols = 4;
+  }
+
+  var tr = document.createElement('tr');
+  var pos_td = document.createElement('td');
+  var id_td = document.createElement('td');
+
+  pos_td.innerHTML = 'DNQ';
+  id_td.innerHTML = player_id;
+  tr.appendChild(pos_td);
+  tr.appendChild(id_td);
+
+  for (var i = 0; i < cols; i++) {
+    var td = document.createElement('td');
+    td.innerHTML = 'N/A';
+    tr.appendChild(td);
+  }
+
+  document.querySelector('#rankings_table > tbody').appendChild(tr);
+}
+
 function addToIndividualTable(data) {
   var tr = document.createElement('tr');
   var attributes = ['position', 'id', 'name', 'rank', 'points', 'total_battles'];
