@@ -46,7 +46,7 @@ function fillEditions(data) {
   $('#edition').material_select();
 }
 
-function getSingleDay(url) {
+function getSingleDay(url, player_id) {
   $.ajax({
     method: 'GET',
     url: url,
@@ -56,10 +56,12 @@ function getSingleDay(url) {
     processData: false,
   }).done(function(response) {
     addToTable(response, day);
+  }).fail(function(response) {
+    addEmptyRow(day, player_id);
   });
 }
 
-function getMultiDay(url) {
+function getMultiDay(url, player_id) {
   $.ajax({
     method: 'GET',
     url: url,
@@ -68,6 +70,8 @@ function getMultiDay(url) {
     processData: false,
   }).done(function(response) {
     addToTable(response, day);
+  }).fail( function(response) {
+    addEmptyRow(day, player_id);
   });
 }
 
@@ -77,10 +81,10 @@ function searchPlayers(player_id, edition_id, day) {
 
   if (day === 'list' || day === 'global') {
     url += day + '/' + s_url;
-    getMultiDay(url);
+    getMultiDay(url, player_id);
   } else {
     url += s_url;
-    getSingleDay(url);
+    getSingleDay(url, player_id);
   }
 }
 
